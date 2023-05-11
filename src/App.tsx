@@ -1,21 +1,22 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
 import { counterSlice, selectCount } from "./ReduxStructure/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "./ReduxStructure/types";
 
 const App = () => {
-  // Contador
-  const count = useSelector(selectCount);
+  // Hooks
+    // Armazenar os itens
+    const [addMoreItens, setAddMoreItens] = React.useState<string>("2");
 
-  // Disparar ação selecionada
-  const dispatch = useDispatch();
+    // Contador
+    const count = useSelector(selectCount);
 
-  // Ações
+    // Disparar ação selecionada
+    const dispatch = useDispatch<AppDispatch>();
+
+  // Importar as ações
   const { add, remove, moreItens } = counterSlice.actions;
-
-  // Hook para adicionar mais itens de uma vez só
-  const [addMoreItens, setAddMoreItens] = React.useState<string>("2");
-  const incrementValue = Number(addMoreItens) || 0;
 
   return (
     <div style={{ textAlign: "center", paddingTop: "60px", fontSize: "70px" }}>
@@ -44,7 +45,7 @@ const App = () => {
       <div>
         <button
           style={{ fontSize: "20px" }}
-          onClick={() => dispatch(moreItens(incrementValue))}
+          onClick={() => dispatch(moreItens(+addMoreItens))}
         >
           Adicionar de uma vez
         </button>
